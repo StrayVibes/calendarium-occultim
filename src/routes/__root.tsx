@@ -77,21 +77,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Calendarium Occultum" },
+      { title: "Calendarium Occultum — Calendario esoterico, lune e diario" },
       {
         name: "description",
         content:
-          "Calendario esoterico, lune, meteo, diario dell'umore, meditazione e musica rituale.",
+          "Calendario esoterico multi-tradizione con fasi lunari, meteo in tempo reale, diario dell'umore, task, meditazione runica e radio nordica, tribale e psichedelica.",
       },
-      { property: "og:title", content: "Calendarium Occultum" },
+      { property: "og:title", content: "Calendarium Occultum — Calendario esoterico, lune e diario" },
       {
         property: "og:description",
         content:
-          "Calendario esoterico, lune, meteo, diario dell'umore, meditazione e musica rituale.",
+          "Calendario esoterico multi-tradizione con fasi lunari, meteo in tempo reale, diario dell'umore, task, meditazione runica e radio nordica, tribale e psichedelica.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Calendarium Occultum — Calendario esoterico, lune e diario" },
+      { name: "twitter:description", content: "Calendario esoterico multi-tradizione con fasi lunari, meteo in tempo reale, diario dell'umore, task, meditazione runica e radio nordica, tribale e psichedelica." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a9cb17d3c0a4ff2f638d8133a2227e8e/id-preview-c338d722--cd3f070a-a13e-4a8f-95c4-1c9732fd6aa1.lovable.app-1786502827235.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a9cb17d3c0a4ff2f638d8133a2227e8e/id-preview-c338d722--cd3f070a-a13e-4a8f-95c4-1c9732fd6aa1.lovable.app-1786502827235.png" },
     ],
     links: [
       {

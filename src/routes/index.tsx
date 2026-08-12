@@ -22,11 +22,11 @@ export const Route = createFileRoute("/")({
         content:
           "Calendario esoterico multi-tradizione con fasi lunari, meteo in tempo reale, diario dell'umore, task, meditazione runica e radio nordica, tribale e psichedelica.",
       },
-      { property: "og:title", content: "Calendarium Occultum" },
+      { property: "og:title", content: "Calendarium Occultum — Calendario esoterico, lune e diario" },
       {
         property: "og:description",
         content:
-          "Ricorrenze pagane, lune, meteo preciso, diario dell'umore con analisi annuale, meditazione e musica rituale.",
+          "Calendario esoterico multi-tradizione con fasi lunari, meteo in tempo reale, diario dell'umore, task, meditazione runica e radio nordica, tribale e psichedelica.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
