@@ -138,8 +138,8 @@ export function WeatherView() {
             <p className="mt-1 font-display text-5xl text-gold">{Math.round(data.temp)}°</p>
             <p className="text-sm text-muted-foreground">{desc.it}</p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Percepita {Math.round(data.apparent)}° · Min {Math.round(data.daily[0].min)}° / Max{" "}
-              {Math.round(data.daily[0].max)}°
+              Percepita {Math.round(data.apparent)}° · Min {Math.round(data.daily[0]?.min ?? 0)}° / Max{" "}
+              {Math.round(data.daily[0]?.max ?? 0)}°
             </p>
           </section>
 
