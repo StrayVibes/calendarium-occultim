@@ -125,3 +125,23 @@
     radial-gradient(1.5px 1.5px at 45% 80%, color-mix(in oklch, var(--color-foreground) 35%, transparent), transparent),
     radial-gradient(1px 1px at 85% 20%, color-mix(in oklch, var(--color-foreground) 30%, transparent), transparent);
 }
+
+@utility input {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-foreground);
+  outline: none;
+}
+
+@utility label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-muted-foreground);
+}
