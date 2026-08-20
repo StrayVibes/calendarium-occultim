@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { audioEngine, RUNES, SOLFEGGIO, type NoiseKind } from "@/lib/audio";
 import { useStored } from "@/lib/storage";
+import { DiapasonLab } from "@/components/DiapasonLab";
+
 
 interface Session {
   id: string;
@@ -198,6 +200,9 @@ export function MeditationView() {
           </button>
         )}
       </section>
+
+      <DiapasonLab />
+
 
       <section className="panel space-y-2 p-4">
         <h3 className="text-xs uppercase tracking-widest text-muted-foreground">
