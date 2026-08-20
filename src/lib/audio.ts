@@ -294,7 +294,9 @@ class AudioEngine {
   stopAll() {
     this.stopNoise();
     [...this.tones.keys()].forEach((hz) => this.stopTone(hz));
+    [...this.slots.keys()].forEach((id) => this.stopSlot(id));
   }
+
 
   get activeTones() {
     return [...this.tones.keys()];
