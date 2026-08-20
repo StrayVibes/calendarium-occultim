@@ -40,12 +40,100 @@ export const RUNES: Rune[] = [
 
 export const SOLFEGGIO = [174, 285, 396, 417, 528, 639, 741, 852, 963];
 
+export type WaveKind = "sine" | "triangle" | "square" | "sawtooth";
+
+export interface FreqPreset {
+  hz: number;
+  label: string;
+  note?: string;
+}
+
+/** Ampia libreria di frequenze: mistiche, planetarie, cerebrali, artificiali. */
+export const FREQ_LIBRARY: { group: string; items: FreqPreset[] }[] = [
+  {
+    group: "Solfeggio sacre",
+    items: [
+      { hz: 174, label: "174 Hz", note: "Antidolorifico, base" },
+      { hz: 285, label: "285 Hz", note: "Rigenerazione tessuti" },
+      { hz: 396, label: "396 Hz", note: "Libera la paura" },
+      { hz: 417, label: "417 Hz", note: "Rompe gli schemi" },
+      { hz: 528, label: "528 Hz", note: "Trasformazione, DNA" },
+      { hz: 639, label: "639 Hz", note: "Relazioni, cuore" },
+      { hz: 741, label: "741 Hz", note: "Espressione, pulizia" },
+      { hz: 852, label: "852 Hz", note: "Intuizione" },
+      { hz: 963, label: "963 Hz", note: "Corona, unità" },
+    ],
+  },
+  {
+    group: "Chakra",
+    items: [
+      { hz: 194.18, label: "Muladhara", note: "Radice · terra" },
+      { hz: 210.42, label: "Svadhisthana", note: "Sacro · luna" },
+      { hz: 126.22, label: "Manipura", note: "Plesso · sole" },
+      { hz: 136.1, label: "Anahata", note: "Cuore · OM / anno solare" },
+      { hz: 141.27, label: "Vishuddha", note: "Gola · mercurio" },
+      { hz: 221.23, label: "Ajna", note: "Terzo occhio · venere" },
+      { hz: 172.06, label: "Sahasrara", note: "Corona · anno platonico" },
+    ],
+  },
+  {
+    group: "Planetarie (Cousto)",
+    items: [
+      { hz: 194.71, label: "Terra (giorno)", note: "Vitalità" },
+      { hz: 210.42, label: "Luna sinodica", note: "Emozione" },
+      { hz: 144.72, label: "Marte", note: "Volontà" },
+      { hz: 183.58, label: "Giove", note: "Espansione" },
+      { hz: 147.85, label: "Saturno", note: "Struttura, karma" },
+      { hz: 207.36, label: "Urano", note: "Rottura, genio" },
+      { hz: 211.44, label: "Nettuno", note: "Sogno, mistica" },
+      { hz: 140.25, label: "Plutone", note: "Trasmutazione" },
+    ],
+  },
+  {
+    group: "Onde cerebrali (battimenti)",
+    items: [
+      { hz: 2, label: "Delta 2 Hz", note: "Sonno profondo" },
+      { hz: 4, label: "Theta 4 Hz", note: "Trance, visione" },
+      { hz: 6, label: "Theta 6 Hz", note: "Meditazione profonda" },
+      { hz: 7.83, label: "Schumann 7.83", note: "Risonanza terrestre" },
+      { hz: 10, label: "Alpha 10 Hz", note: "Calma lucida" },
+      { hz: 14, label: "Beta 14 Hz", note: "Concentrazione" },
+      { hz: 40, label: "Gamma 40 Hz", note: "Insight, coerenza" },
+    ],
+  },
+  {
+    group: "Accordature",
+    items: [
+      { hz: 432, label: "A 432 Hz", note: "Accordatura naturale" },
+      { hz: 440, label: "A 440 Hz", note: "Standard moderno" },
+      { hz: 444, label: "A 444 Hz", note: "Scala 528" },
+      { hz: 256, label: "C 256 Hz", note: "Verdi / scientifica" },
+      { hz: 111, label: "111 Hz", note: "Camere ipogee, Hypogeum" },
+      { hz: 33, label: "33 Hz", note: "Sub, radicamento" },
+    ],
+  },
+  {
+    group: "Artificiali / sperimentali",
+    items: [
+      { hz: 60, label: "60 Hz", note: "Ronzio di rete" },
+      { hz: 100, label: "100 Hz", note: "Test tono puro" },
+      { hz: 300, label: "300 Hz", note: "Medio neutro" },
+      { hz: 1000, label: "1 kHz", note: "Riferimento tecnico" },
+      { hz: 1618, label: "1618 Hz", note: "Sezione aurea" },
+      { hz: 3141, label: "3141 Hz", note: "Pi, acuto tagliente" },
+    ],
+  },
+];
+
 class AudioEngine {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
+  private analyser: AnalyserNode | null = null;
   private noiseNode: AudioBufferSourceNode | null = null;
   private noiseGain: GainNode | null = null;
   private tones = new Map<number, { osc: OscillatorNode; gain: GainNode }>();
+  private slots = new Map<string, { osc: OscillatorNode; gain: GainNode }>();
+
 
   private ensure() {
     if (!this.ctx) {
