@@ -143,16 +143,62 @@ class AudioEngine {
       this.ctx = new Ctor();
       this.master = this.ctx.createGain();
       this.master.gain.value = 0.6;
-      this.master.connect(this.ctx.destination);
+      this.analyser = this.ctx.createAnalyser();
+      this.analyser.fftSize = 2048;
+      this.master.connect(this.analyser);
+      this.analyser.connect(this.ctx.destination);
     }
     if (this.ctx.state === "suspended") void this.ctx.resume();
     return { ctx: this.ctx, master: this.master! };
+  }
+
+  /** Analyser per l'oscilloscopio. */
+  getAnalyser() {
+    this.ensure();
+    return this.analyser!;
+  }
+
+  /** Diapason a slot: frequenza modulabile in continuo. */
+  setSlot(id: string, hz: number, wave: WaveKind = "sine", level = 0.16) {
+    const { ctx, master } = this.ensure();
+    const existing = this.slots.get(id);
+    if (existing) {
+      existing.osc.frequency.setTargetAtTime(hz, ctx.currentTime, 0.03);
+      existing.osc.type = wave;
+      existing.gain.gain.setTargetAtTime(level, ctx.currentTime, 0.05);
+      return;
+    }
+    const osc = ctx.createOscillator();
+    osc.type = wave;
+    osc.frequency.value = hz;
+    const gain = ctx.createGain();
+    gain.gain.value = 0;
+    osc.connect(gain).connect(master);
+    osc.start();
+    gain.gain.setTargetAtTime(level, ctx.currentTime, 0.2);
+    this.slots.set(id, { osc, gain });
+  }
+
+  stopSlot(id: string) {
+    const entry = this.slots.get(id);
+    if (!entry || !this.ctx) return;
+    entry.gain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.15);
+    const osc = entry.osc;
+    setTimeout(() => {
+      try {
+        osc.stop();
+      } catch {
+        /* already stopped */
+      }
+    }, 500);
+    this.slots.delete(id);
   }
 
   setVolume(v: number) {
     const { master, ctx } = this.ensure();
     master.gain.setTargetAtTime(v, ctx.currentTime, 0.1);
   }
+
 
   startNoise(kind: NoiseKind, level = 0.4) {
     const { ctx, master } = this.ensure();
